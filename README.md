@@ -1,0 +1,1 @@
+# mathjs-fast-map
