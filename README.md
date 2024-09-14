@@ -21,12 +21,14 @@ Some things I thought might work but didn't:
 
 # TODO
 
+- [x] Switch logic to itereate on all tests each trials
 - [ ] Plan the PR phase
 - [ ] Merge devlop into the branch
 - [ ] Work on it
 
 # Done
 
+- [x] Make a boolean stating if it should be fast (for testing)
 - [x] Fix issue with index (was missing index pop)
 - [x] Test 1 arg vs (abs)
 - [x] Test 2 arg
