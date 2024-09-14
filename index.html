@@ -15,8 +15,13 @@
         all
     } from "https://cdn.jsdelivr.net/npm/mathjs@latest/+esm"
 
+    const N = 100
+    const trials = 20;
+    const warmups = 5;
+
     const math = create(all);
-    const A = math.random([200, 200], -1, 1)
+    const A = math.random([N, N], -1, 1)
+
 
     const cb1 = Math.abs
     const cb1t = math.abs
@@ -81,7 +86,7 @@
     div1.append(plot1);
 
 
-    const cb2 = (v, i) => v + i[0]
+    const cb2 = (v, i) => v + i[0] -i[1]/13
     const cb2t = math.typed({ 'number, Array': cb2, 'number, Matrix': cb2 })
     const cb2t1 = math.typed({ 'number, Array': cb2 })
 
@@ -313,10 +318,12 @@
         function recurse2(X, index) {
             if (Array.isArray(X)) {
                 const dim = index.push(null) - 1
-                return X.map((x, i) => {
+                const results = X.map((x, i) => {
                     index[dim] = i
                     return recurse2(x, index)
                 })
+                index.pop()
+                return results
             } else {
                 return cb(X, index)
             }
@@ -325,10 +332,12 @@
         function recurse3(X, index) {
             if (Array.isArray(X)) {
                 const dim = index.push(null) - 1
-                return X.map((x, i) => {
+                const results = X.map((x, i) => {
                     index[dim] = i
                     return recurse3(x, index)
                 })
+                index.pop()
+                return results
             } else {
                 return cb(X, index, A)
             }
@@ -363,6 +372,7 @@
                     index[dim] = i
                     recurse2(x, index)
                 })
+                index.pop()
             } else {
                 cb(X, index)
             }
@@ -436,8 +446,6 @@
     }
 
     function benchmark(run) {
-        const trials = 100;
-        const warmups = 10;
         const times = [];
         for (let i = 0; i < trials + warmups; i++) {
             const start = performance.now();
