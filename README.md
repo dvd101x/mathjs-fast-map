@@ -2,6 +2,10 @@
 
 This is a workbench intended to help speed up some mathjs functions. With a fast benchmark showing granular results in a box plot.
 
+The result is a static website found here
+
+https://dvd101x.github.io/mathjs-fast-map/
+
 # Tests
 
 This has some HTML tests that uses observable plot to check for speed. They run best in chrome due to the sub muilisecond resolution of `performance.now()`.
