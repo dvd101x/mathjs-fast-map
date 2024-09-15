@@ -4,10 +4,10 @@ import {
     all
 } from "https://cdn.jsdelivr.net/npm/mathjs@latest/+esm"
 
-// switch to false before uplading?
+// switch to false before uplading
 const fast = false
 
-const N = fast ? 100 : 500
+const N = fast ? 100 : 300
 const trials = fast ? 20 : 50
 const warmups = fast ? 5 : 10
 
@@ -56,7 +56,7 @@ const plot1 = Plot.plot({
         label: null
     },
     title: "map callback(value)",
-    marginLeft: 120,
+    marginLeft: 150,
     marks: [
         Plot.ruleX([0]),
         Plot.boxX(results1, {
@@ -65,6 +65,7 @@ const plot1 = Plot.plot({
         }),
     ]
 })
+
 const div1 = document.querySelector("#plot1");
 div1.append(plot1);
 
@@ -76,10 +77,13 @@ const cb2t1 = math.typed({ 'number, Array': cb2 })
 const tests2 = [
     { name: '1a map', run: () => math.map(A, cb2) },
     { name: '1b new map', run: () => newMap(A, cb2) },
+    { name: '1c new mapClone', run: () => newMapClone(A, cb2) },
     { name: '2a map typed simple', run: () => math.map(A, cb2t1) },
     { name: '2b new map typed simple', run: () => newMap(A, cb2t1) },
+    { name: '2c new map clone typed simple', run: () => newMapClone(A, cb2t1) },
     { name: '3a map typed', run: () => math.map(A, cb2t) },
     { name: '3b new map typed', run: () => newMap(A, cb2t) },
+    { name: '3c new map clone typed', run: () => newMapClone(A, cb2t) },
 ]
 
 const messages2 = `<li>map == newMap for function: ${math.deepEqual(
@@ -108,7 +112,7 @@ const plot2 = Plot.plot({
         label: null
     },
     title: "map callback(value, index)",
-    marginLeft: 120,
+    marginLeft: 150,
     marks: [
         Plot.ruleX([0]),
         Plot.boxX(results2, {
@@ -122,12 +126,12 @@ div.append(plot2);
 
 const tests3 = [
     { name: '0 abs', run: () => math.abs(A) },
-    { name: '1a map', run: () => math.forEach(A, cb1) },
-    { name: '1b new map', run: () => newForEach(A, cb1) },
-    { name: '2a map typed simple', run: () => math.forEach(A, cb1t1) },
-    { name: '2b new map typed simple', run: () => newForEach(A, cb1t1) },
-    { name: '3a map typed', run: () => math.forEach(A, cb1t) },
-    { name: '3b new map typed', run: () => newForEach(A, cb1t) }
+    { name: '1a forEach', run: () => math.forEach(A, cb1) },
+    { name: '1b new forEach', run: () => newForEach(A, cb1) },
+    { name: '2a forEach typed simple', run: () => math.forEach(A, cb1t1) },
+    { name: '2b new forEach typed simple', run: () => newForEach(A, cb1t1) },
+    { name: '3a forEach typed', run: () => math.forEach(A, cb1t) },
+    { name: '3b new forEach typed', run: () => newForEach(A, cb1t) }
 ]
 
 const t3_1a = []
@@ -168,7 +172,7 @@ const plot3 = Plot.plot({
         label: null
     },
     title: "forEach callback(value)",
-    marginLeft: 120,
+    marginLeft: 150,
     marks: [
         Plot.ruleX([0]),
         Plot.boxX(results3, {
@@ -183,12 +187,15 @@ div3.append(plot3);
 
 
 const tests4 = [
-    { name: '1a map', run: () => math.forEach(A, cb2) },
-    { name: '1b new map', run: () => newForEach(A, cb2) },
-    { name: '2a map typed simple', run: () => math.forEach(A, cb2t1) },
-    { name: '2b new map typed simple', run: () => newForEach(A, cb2t1) },
-    { name: '3a map typed', run: () => math.forEach(A, cb2t) },
-    { name: '3b new map typed', run: () => newForEach(A, cb2t) },
+    { name: '1a forEach', run: () => math.forEach(A, cb2) },
+    { name: '1b new forEach', run: () => newForEach(A, cb2) },
+    { name: '1c new forEach', run: () => newForEachClone(A, cb2) },
+    { name: '2a forEach typed simple', run: () => math.forEach(A, cb2t1) },
+    { name: '2b new forEach typed simple', run: () => newForEach(A, cb2t1) },
+    { name: '2c new forEach clone typed simple', run: () => newForEachClone(A, cb2t1) },
+    { name: '3a forEach typed', run: () => math.forEach(A, cb2t) },
+    { name: '3b new forEach typed', run: () => newForEach(A, cb2t) },
+    { name: '3c new forEach Clone typed', run: () => newForEachClone(A, cb2t) },
 ]
 
 const t4_1a = []
@@ -233,7 +240,7 @@ const plot4 = Plot.plot({
         label: null
     },
     title: "forEach callback(value, index)",
-    marginLeft: 120,
+    marginLeft: 150,
     marks: [
         Plot.ruleX([0]),
         Plot.boxX(results4, {
@@ -265,7 +272,7 @@ function _deepMap(A, cb, N) {
 
     function recurse1(X) {
         if (Array.isArray(X)) {
-            return X.map((x, i) => recurse1(x))
+            return X.map(x => recurse1(x))
         } else {
             return cb(X)
         }
@@ -281,7 +288,7 @@ function _deepMap(A, cb, N) {
             index.pop()
             return results
         } else {
-            return cb(X, index)
+            return cb(X, [...index])
         }
     }
 
@@ -315,7 +322,7 @@ function _deepForEach(A, cb, N) {
 
     function recurse1(X) {
         if (Array.isArray(X)) {
-            X.forEach((x, i) => recurse1(x))
+            X.forEach(x => recurse1(x))
         } else {
             cb(X)
         }
@@ -398,6 +405,135 @@ function newForEach(A, cb) {
         }
     } else {
         return _deepForEach(A, cb, cb.length)
+    }
+}
+
+function _deepMapClone(A, cb, N) {
+    switch (N) {
+        case 1: return recurse1(A)
+        case 2: return recurse2(A, [])
+        case 3: return recurse3(A, [])
+    }
+
+    function recurse1(X) {
+        if (Array.isArray(X)) {
+            return X.map(x => recurse1(x))
+        } else {
+            return cb(X)
+        }
+    }
+
+    function recurse2(X, index) {
+        if (Array.isArray(X)) {
+            const dim = index.push(null) - 1
+            const results = X.map((x, i) => {
+                index[dim] = i
+                return recurse2(x, index)
+            })
+            index.pop()
+            return results
+        } else {
+            return cb(X, [...index])
+        }
+    }
+
+    function recurse3(X, index) {
+        if (Array.isArray(X)) {
+            const dim = index.push(null) - 1
+            const results = X.map((x, i) => {
+                index[dim] = i
+                return recurse3(x, index)
+            })
+            index.pop()
+            return results
+        } else {
+            return cb(X, [...index], A)
+        }
+    }
+}
+
+function _deepForEachClone(A, cb, N) {
+    switch (N) {
+        case 1:
+            recurse1(A)
+            break
+        case 2:
+            recurse2(A, [])
+            break
+        case 3:
+            recurse3(A, [])
+            break
+    }
+
+    function recurse1(X) {
+        if (Array.isArray(X)) {
+            X.forEach(x => recurse1(x))
+        } else {
+            cb(X)
+        }
+    }
+
+    function recurse2(X, index) {
+        if (Array.isArray(X)) {
+            const dim = index.push(null) - 1
+            X.forEach((x, i) => {
+                index[dim] = i
+                recurse2(x, index)
+            })
+            index.pop()
+        } else {
+            cb(X, [...index])
+        }
+    }
+
+    function recurse3(X, index) {
+        if (Array.isArray(X)) {
+            const dim = index.push(null) - 1
+            X.forEach((x, i) => {
+                index[dim] = i
+                recurse3(x, index)
+            })
+        } else {
+            cb(X, [...index], A)
+        }
+    }
+}
+
+function newMapClone(A, cb) {
+    if (math.typed.isTypedFunction(cb)) {
+        const [firstValue, firstIndex] = getFirstValueAndIndex(A)
+        const argsLength = getMaxArguments(cb, [firstValue, firstIndex, A])
+        const numberOfPossibleSignatures = Object.values(cb.signatures)
+            .map(x => x.length)   // get the number of arguments of each function
+            .filter(x => x === argsLength) // filter only the ones that matches in length with the args to try
+            .length // check the length of the array
+        if (numberOfPossibleSignatures <= 1) {
+            const implementation = math.typed.resolve(cb, [firstValue, firstIndex, A].slice(0, argsLength)).implementation
+            return _deepMapClone(A, implementation, argsLength)
+        } else {
+            return _deepMapClone(A, cb, argsLength)
+        }
+    } else {
+        return _deepMapClone(A, cb, cb.length)
+    }
+}
+
+function newForEachClone(A, cb) {
+    if (math.typed.isTypedFunction(cb)) {
+        const [firstValue, firstIndex] = getFirstValueAndIndex(A)
+        const argsLength = getMaxArguments(cb, [firstValue, firstIndex, A])
+        const numberOfPossibleSignatures = Object.values(cb.signatures)
+            .map(x => x.length)   // get the number of arguments of each function
+            .filter(x => x === argsLength) // filter only the ones that matches in length with the args to try
+            .length // check the length of the array
+        if (numberOfPossibleSignatures <= 1) {
+            const implementation = math.typed.resolve(cb, [firstValue, firstIndex, A].slice(0, argsLength)).implementation
+            return _deepForEachClone(A, implementation, argsLength)
+        } else {
+            return _deepForEachClone(A, cb, argsLength)
+        }
+    } else {
+        return _deepForEachClone(A, cb, cb.length)
     }
 }
 
