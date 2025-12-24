@@ -1,11 +1,14 @@
-import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 import {
     create,
     all
-} from "https://cdn.jsdelivr.net/npm/mathjs@latest/+esm"
+} from "mathjs"
+
+import * as Plot from "plot";
+
+import { benchmark } from "./benchmark.js";
 
 // switch to false before uplading
-const fast = false
+const fast = true
 
 const N = fast ? 100 : 300
 const trials = fast ? 20 : 50
@@ -44,7 +47,7 @@ const messages1 = `<li>map == newMap for function: ${math.deepEqual(
 document.querySelector("#messages1").innerHTML = messages1
 
 
-const results1 = benchmark(tests1)
+const results1 = benchmark(tests1, trials, warmups)
 
 const plot1 = Plot.plot({
     x: {
@@ -100,7 +103,7 @@ const messages2 = `<li>map == newMap for function: ${math.deepEqual(
 
 document.querySelector("#messages2").innerHTML = messages2
 
-const results2 = benchmark(tests2)
+const results2 = benchmark(tests2, trials, warmups)
 
 const plot2 = Plot.plot({
     x: {
@@ -160,7 +163,7 @@ const messages3 = `<li>forEach == newForEach for function: ${math.deepEqual(
 
 document.querySelector("#messages3").innerHTML = messages3
 
-const results3 = benchmark(tests3)
+const results3 = benchmark(tests3, trials, warmups)
 
 const plot3 = Plot.plot({
     x: {
@@ -228,7 +231,7 @@ messages4 += `<li>forEach == forEach typed: ${math.deepEqual(
 
 document.querySelector("#messages4").innerHTML = messages4
 
-const results4 = benchmark(tests4)
+const results4 = benchmark(tests4, trials, warmups)
 
 const plot4 = Plot.plot({
     x: {
@@ -535,17 +538,4 @@ function newForEachClone(A, cb) {
     } else {
         return _deepForEachClone(A, cb, cb.length)
     }
-}
-
-function benchmark(tests) {
-    const benchResults = [];
-    for (let i = 0; i < trials + warmups; i++) {
-        tests.forEach(test => {
-            const start = performance.now();
-            test.run();
-            const end = performance.now();
-            benchResults.push({ name: test.name, time: end - start });
-        })
-    }
-    return benchResults.slice(warmups);
 }

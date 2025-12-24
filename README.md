@@ -28,11 +28,10 @@ This has some HTML tests that uses observable plot to check for speed. They run 
 
 # TODO
 
-- [ ] Plan the PR phase
-- [ ] Merge devlop into the branch
-
 # Done
 
+- [x] Plan the PR phase
+- [x] Merge devlop into the branch
 - [x] Add a clone index alternative and tests.
 - [x] Switch logic to itereate on all tests each trials
 - [x] Make a boolean stating if it should be fast (for testing)
