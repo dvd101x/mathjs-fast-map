@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head><title>Mathjs map tests</title></head>
+<script type="importmap">
+{
+  "imports": {
+	"mathjs": "https://cdn.jsdelivr.net/npm/mathjs@latest/+esm",
+	"plot": "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/+esm",
+	"benchmark": "./benchmark.js"
+  }
+}
+</script>
+<body>
+	<p>These are old tests made to make the iteration of map faster, some of them are now implemented. 
+		But the new methods should not be faster thant the current built-in math functions.
+	</p>
+<div id="plot1"></div>
+<ul id="messages1"></ul>
+<div id="plot2"></div>
+<ul id="messages2"></ul>
+<div id="plot3"></div>
+<ul id="messages3"></ul>
+<div id="plot4"></div>
+<ul id="messages4"></ul>
+</body>
+<script src='map.js' type="module">
+</script>

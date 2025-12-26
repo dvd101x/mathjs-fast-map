@@ -1,22 +1,53 @@
 <!DOCTYPE html>
 <head><title>Mathjs map tests</title></head>
+<script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
 <script type="importmap">
 {
   "imports": {
 	"mathjs": "https://cdn.jsdelivr.net/npm/mathjs@latest/+esm",
-	"plot": "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/+esm"
+	"plot": "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/+esm",
+	"benchmark": "./benchmark.js"
   }
 }
 </script>
 <body>
-<div id="plot1"></div>
-<ul id="messages1"></ul>
+	<ul>
+		<li><a href="index.html">Go to map Tests</a></li>
+	</ul>
+<h1>Create a matrix</h1>
+<p>This will be a test of the map creation of a matrix.</p>
+<ol>
+	<li>Generate a matrix.</li>
+	<li>Deep clone an array</li>
+	<li>Clone a flattened array</li>
+	<li>Generate a matrix and reshape</li>
+	<li>Generate a matrix without validation</li>
+	<li>Generate a matrix without validation and without clone</li>
+</ol>
+
+<div id="plot"></div>
+<ul id="messages"></ul>
+
+<h1>Map different functions</h1>
+
+<p>In this section ways of mapping different functions will be tested.</p>
+
+<ol>
+	<li>Mapping a matrix with a callback function.</li>
+	<li>Mapping a typed matrix with a callback function.</li>
+	<li>Mapping a matrix with a typed callback function.</li>
+	<li>Mapping a typed matrix with a typed callback function.</li>
+	<li>Mapping a matrix with a typed callback function of single signature.</li>
+	<li>Mapping a typed matrix with a typed callback function of single signature.</li>
+	<li>Mapping a matrix with a typed callback function wraped in a unary function.</li>
+	<li>Mapping a typed matrix with a typed callback function wraped in a unary function.</li>
+	<li>Mapping a matrix with a callback function wraped in a unary function.</li>
+	<li>Mapping a typed matrix with a callback function wraped in a unary function.</li>
+</ol>
+
 <div id="plot2"></div>
 <ul id="messages2"></ul>
-<div id="plot3"></div>
-<ul id="messages3"></ul>
-<div id="plot4"></div>
-<ul id="messages4"></ul>
+
 </body>
 <script src='main.js' type="module">
 </script>
